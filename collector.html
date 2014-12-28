@@ -1,14 +1,89 @@
 <head>
-  <title>collector</title>
+  <title>Sample collector</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+  <div class="main">
+    {{#if currentUser}}
+      {{> loginButtons}}    
+      <h1 class="ui header">Sample libraries</h1>
+      <div class="ui styled fluid accordion">
+        {{#each libraries}}
+          {{> library}}
+        {{/each}}
+      </div>
+      {{#if isAdmin}} {{> libraryform}} {{/if}}
+      <div class="ui fitted divider"></div>
+    {{else}}
+      {{> loginform}}
+    {{/if}}
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="library">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    {{name}}
+  </div>
+  <div class="content">
+    <p>info of this lab</p>
+    <div class="accordion">
+      {{#each groups}}
+        {{> group}}
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="group">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    {{name}}
+  </div>
+  <div class="content">
+    <p>info of this group</p>
+    <div class="ui tiny images">
+      {{#each samples}}
+        {{> sample}}
+      {{/each}}
+    </div>
+    {{> sampleform}}
+  </div>
+</template>
+
+<template name="sample">
+  <img src="{{url}}" alt="sampleimg">
+</template>
+
+<template name="loginform">
+  <h1 class="ui header">Sorry, but you did not log in ^(0.0)^</h1>
+  <div class="ui fitted divider"></div>
+  <div class="login wrapper">
+    {{> loginButtons}}
+  </div>
+</template>
+
+<template name="libraryform">
+  <h1 class="ui header">Add a library</h1>
+  <div class="ui styled fluid accordion">
+    <div class="title">
+      <i class="icon dropdown"></i>
+      *--    Add a lib    --*
+    </div>
+    <div class="content field">
+      <div class="ui mini action input">
+        <input type="text" name="libname" placeholder="New lib name..." autocomplete="off" />
+        <div class="ui teal right labeled icon add button"><i class="add square icon"></i>Add</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="sampleform">
+  <h1 class="ui header">Upload Sample</h1>
+  <div class="ui mini action input">
+    <input type="file" name="photo" accpet="image/*" >
+    <input type="text" name="info" placeholder="about it..." autocomplete="off" />
+    <div class="ui teal right labeled icon upload button"><i class="cloud upload icon"></i>Upload</div>
+  </div>
 </template>
